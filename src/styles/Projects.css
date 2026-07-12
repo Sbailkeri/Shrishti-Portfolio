@@ -1,0 +1,872 @@
+/* ==========================================
+   PROJECT SECTION
+========================================== */
+
+.projects-section{
+
+    position:relative;
+
+     
+    height:100vh;
+
+
+    overflow:hidden;
+
+    /* background:#040611; */
+
+    padding:0px 5%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+/* ==========================================
+   BACKGROUND GLOWS
+========================================== */
+
+
+/* ==========================================
+   MAIN GRID
+========================================== */
+
+.projects-wrapper{
+    height:100vh;
+    width:100%;
+    max-width:1700px;
+
+    display:grid;
+    grid-template-columns:30% 55% 15%;
+
+    gap:50px;
+
+    align-items:center;
+
+    box-sizing:border-box;
+}
+
+/* ==========================================
+   LEFT PANEL
+========================================== */
+.projects-sidebar{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+
+    color:white;
+    
+}
+
+.section-tag{
+
+    color:#8B5CF6;
+
+    letter-spacing:5px;
+
+    font-size:.7rem;
+
+    font-weight:600;
+
+}
+
+.projects-sidebar h2{
+
+    font-size:3rem;
+
+    line-height:1.03;
+
+    margin:20px 0;
+
+}
+
+.projects-sidebar p{
+
+    color:#94A3B8;
+
+    font-size:1rem;
+
+    line-height:1.9;
+
+    margin-bottom:50px;
+
+}
+
+/* ==========================================
+   TIMELINE
+========================================== */
+
+.timeline{
+
+    position:relative;
+
+    padding-left:52px;
+
+}
+
+.timeline::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:15px;
+
+    top:10px;
+
+    bottom:20px;
+
+    width:2px;
+
+    background:
+
+    linear-gradient(
+
+        #7C3AED,
+
+        rgba(255,255,255,.08)
+
+    );
+
+}
+
+/* ==========================================
+   TIMELINE ITEM
+========================================== */
+
+.timeline-item{
+
+    position:relative;
+
+    margin-bottom:20px;
+
+    cursor:pointer;
+
+}
+
+/* ==========================================
+   DOT
+========================================== */
+
+.timeline-dot{
+
+    position:absolute;
+
+    left:-45px;
+
+    top:38px;
+
+    width:18px;
+
+    height:18px;
+
+    border-radius:50%;
+
+    background:#7C3AED;
+
+    border:4px solid #040611;
+
+    box-shadow:
+
+    0 0 25px rgba(139,92,246,.7);
+
+    transition:.35s;
+
+}
+
+/* ==========================================
+   CARD
+========================================== */
+
+.timeline-card{
+
+    height: 80px;
+    padding: 10px 5px 10px 14px;
+
+    border-radius:12px;
+
+    background:
+
+    linear-gradient(
+
+        145deg,
+
+        rgba(255,255,255,.06),
+
+        rgba(255,255,255,.03)
+
+    );
+
+    backdrop-filter:blur(25px);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    transition:.45s;
+
+}
+
+.timeline-card:hover{
+
+    transform:translateX(8px);
+
+    border-color:#8B5CF6;
+
+    box-shadow:
+
+    0 0 45px rgba(139,92,246,.22);
+
+}
+
+.timeline-item.active .timeline-card{
+
+    border-color:#8B5CF6;
+
+    box-shadow:
+
+    0 0 60px rgba(139,92,246,.3);
+
+    transform:translateX(10px);
+
+}
+
+.timeline-item.active .timeline-dot{
+
+    transform:scale(1.25);
+
+}
+
+/* ==========================================
+   CARD TEXT
+========================================== */
+
+.command{
+
+    color:#6EE7B7;
+
+    font-size:.8rem;
+
+    margin-bottom:10px;
+
+}
+
+.timeline-card h3{
+
+    color:white;
+
+    font-size:1.5rem;
+
+    margin-bottom:5px;
+
+}
+
+.timeline-card p{
+
+    color:#94A3B8;
+
+    margin:0;
+
+    line-height:1.6;
+
+}
+
+/* ==========================================
+   CENTER PANEL
+========================================== */
+
+.projects-main{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+
+    height:100%;
+
+    padding-top:0;
+}
+
+/* ==========================================
+   PREVIEW WINDOW
+========================================== */
+
+.preview-window{
+
+    width:550px;
+
+    height:300px;
+
+    border-radius:34px;
+
+    background:
+
+    linear-gradient(
+
+        145deg,
+
+        rgba(255,255,255,.06),
+
+        rgba(255,255,255,.02)
+
+    );
+
+    backdrop-filter:blur(30px);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    overflow:hidden;
+
+    box-shadow:
+
+        inset 0 0 30px rgba(255,255,255,.04),
+
+        0 25px 60px rgba(0,0,0,.45),
+
+        0 0 70px rgba(139,92,246,.15);
+
+}
+
+/* ==========================================
+   DETAILS
+========================================== */
+
+.project-details{
+    padding-right: 45px;
+    
+    margin-top:25px;
+
+}
+
+.project-details h3{
+
+    color:white;
+
+    font-size:2.2rem;
+
+    margin-bottom:10px;
+
+}
+
+.project-details h4{
+
+    color:#A78BFA;
+
+    font-size:1.17rem;
+
+    font-weight:500;
+
+    /* margin-bottom:10px; */
+
+}
+
+.project-details p{
+
+    color:#CBD5E1;
+
+    line-height:1.7;
+
+    max-width:720px;
+
+}
+
+/* ==========================================
+   TECH STACK
+========================================== */
+
+.tech-stack{
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:14px;
+
+    margin-top:20px;
+
+}
+
+.tech-stack span{
+
+    padding:12px 24px;
+
+    border-radius:50px;
+
+    background:
+
+    linear-gradient(
+
+        145deg,
+
+        rgba(255,255,255,.08),
+
+        rgba(255,255,255,.03)
+
+    );
+
+    border:1px solid rgba(255,255,255,.08);
+
+    color:white;
+
+    transition:.35s;
+
+}
+
+.tech-stack span:hover{
+
+    transform:translateY(-5px);
+
+    border-color:#8B5CF6;
+
+}
+
+/* ==========================================
+   BUTTONS
+========================================== */
+
+.project-buttons{
+
+    display:flex;
+
+    gap:22px;
+
+    margin-top:45px;
+
+}
+
+.btn-primary{
+
+    padding:16px 36px;
+
+    border-radius:18px;
+
+    text-decoration:none;
+
+    color:white;
+
+    background:
+
+    linear-gradient(
+
+        135deg,
+
+        #7C3AED,
+
+        #A855F7
+
+    );
+
+    box-shadow:
+
+        0 15px 35px rgba(124,58,237,.35);
+
+    transition:.35s;
+
+}
+
+.btn-primary:hover{
+
+    transform:translateY(-5px);
+
+}
+
+.btn-secondary{
+
+    padding:16px 36px;
+
+    border-radius:18px;
+
+    text-decoration:none;
+
+    color:white;
+
+    border:1px solid rgba(255,255,255,.12);
+
+    transition:.35s;
+
+}
+
+.btn-secondary:hover{
+
+    border-color:#8B5CF6;
+
+    transform:translateY(-5px);
+
+}
+
+/* ==========================================================
+   RIGHT PANEL
+========================================================== */
+
+.projects-right{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:flex-end;
+
+    height:100%;
+    min-height:0;
+
+    padding-top:0;
+
+    position:relative;
+}
+
+/* ==========================================================
+   FOCUS CARD
+========================================================== */
+
+.focus-card {
+    width: 50%;
+    padding: 20px;
+    border-radius: 15px;
+    background: linear-gradient(145deg, rgba(255, 255, 255, .08), rgba(255, 255, 255, .03));
+    backdrop-filter: blur(28px);
+    border: 1px solid rgba(255, 255, 255, .08);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, .35), inset 0 1px 1px rgba(255, 255, 255, .08);
+    overflow: hidden;
+    position: relative;
+}
+
+.focus-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+
+        linear-gradient(
+            120deg,
+            transparent,
+            rgba(255,255,255,.08),
+            transparent
+        );
+
+    transform:translateX(-120%);
+
+    transition:1s;
+
+}
+
+.focus-card:hover::before{
+
+    transform:translateX(130%);
+
+}
+
+.focus-card:hover{
+
+    transform:translateY(-8px);
+
+    border-color:#8B5CF6;
+
+}
+
+.focus-card h4{
+
+    color:white;
+
+    font-size:1.5rem;
+
+    margin-bottom:25px;
+
+}
+
+.focus-card ul{
+
+    list-style:none;
+
+    padding:0;
+
+    margin:0;
+
+}
+
+.focus-card li{
+
+    color:#CBD5E1;
+
+    padding:12px 0;
+
+    border-bottom:1px solid rgba(255,255,255,.05);
+
+    font-size:1rem;
+
+}
+
+.focus-card li:last-child{
+
+    border-bottom:none;
+
+}
+
+/* ==========================================================
+   CHARACTER SPACE
+========================================================== */
+
+.character-space{
+
+    position:relative;
+
+    width:100%;
+
+    height:480px;
+
+    border-radius:40px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:flex-end;
+
+}
+
+/* ==========================================================
+   GLOW FLOOR
+========================================================== */
+
+
+
+/* ==========================================================
+   GLASS HOVER EFFECT
+========================================================== */
+
+.timeline-card,
+.preview-window,
+.focus-card,
+.tech-stack span{
+
+    transition:
+
+        transform .4s,
+
+        border-color .4s,
+
+        box-shadow .4s;
+
+}
+
+.preview-window:hover{
+
+    transform:translateY(-8px);
+
+    border-color:#8B5CF6;
+
+    box-shadow:
+
+        0 0 80px rgba(139,92,246,.18),
+
+        0 30px 70px rgba(0,0,0,.45);
+
+}
+
+/* ==========================================================
+   BUTTONS
+========================================================== */
+
+.btn-primary,
+.btn-secondary{
+
+    font-weight:600;
+
+    letter-spacing:.4px;
+
+}
+
+.btn-primary:hover{
+
+    box-shadow:
+
+        0 0 35px rgba(139,92,246,.5);
+
+}
+
+.btn-secondary:hover{
+
+    background:rgba(139,92,246,.08);
+
+}
+
+/* ==========================================================
+   SCROLLBAR
+========================================================== */
+
+.timeline{
+
+    width: 330px;
+
+    max-height:300px;
+
+    overflow-y:auto;
+
+    padding-right:20px;
+
+}
+
+.timeline::-webkit-scrollbar{
+
+    width:5px;
+
+}
+
+.timeline::-webkit-scrollbar-thumb{
+
+    background:#8B5CF6;
+
+    border-radius:20px;
+
+}
+
+/* ==========================================================
+   RESPONSIVE
+========================================================== */
+
+/* @media(max-width:1500px){
+
+.projects-wrapper{
+
+    grid-template-columns:
+
+        300px
+        1fr
+        320px;
+
+    gap:40px;
+
+} */
+
+.preview-window{
+
+    width:80%;
+
+}
+
+
+
+@media(max-width:1200px){
+
+.projects-wrapper{
+
+    grid-template-columns:1fr;
+
+}
+
+.projects-sidebar{
+
+    order:1;
+
+}
+
+.projects-main{
+
+    order:2;
+
+}
+
+.projects-right{
+
+    order:3;
+
+    min-height:auto;
+
+    align-items:center;
+
+}
+
+.character-space{
+
+    height:350px;
+
+}
+
+/* .preview-window{
+
+    height:380px;
+
+} */
+
+.projects-sidebar h2{
+
+    font-size:3rem;
+
+}
+
+}
+
+@media(max-width:768px){
+
+.projects-section{
+
+    padding:80px 25px;
+
+}
+
+/* .preview-window{
+
+    height:260px;
+
+} */
+
+.project-details h3{
+
+    font-size:1.8rem;
+
+}
+
+.project-buttons{
+
+    flex-direction:column;
+
+}
+
+.btn-primary,
+.btn-secondary{
+
+    width:100%;
+
+    text-align:center;
+
+}
+
+.timeline{
+
+    padding-left:35px;
+
+}
+
+.timeline-dot{
+
+    left:-35px;
+
+}
+
+}
+
+.project-heading{
+    display: flex;
+
+    align-items:center;
+
+    gap:16px;
+}
+
+.project-divider{
+
+    color:#8B5CF6;
+
+    font-size:1rem;
+
+    font-weight:500;
+
+    opacity:.8;
+}
+
+.projects-section .section-stage{
+
+    left:76%;
+
+    width:1100px;
+
+}

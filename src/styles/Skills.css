@@ -1,0 +1,529 @@
+/* ===========================================
+   SKILLS SECTION
+=========================================== */
+
+.skills-section{
+
+      height:100vh;
+    
+
+    overflow:hidden;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    position:relative;
+
+    /* background: #040611;  */
+} 
+
+/* ===========================================
+   PREMIUM BACKGROUND
+=========================================== */
+
+/* .skills-glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(180px);
+    z-index: 0;
+}
+
+.glow-left {
+    width: 650px;
+    height: 650px;
+    left: -250px;
+    bottom: -250px;
+    background: rgba(59,130,246,.18);
+    animation: glowLeft 18s ease-in-out infinite alternate;
+}
+
+.glow-right {
+    width: 850px;
+    height: 850px;
+    right: -250px;
+    bottom: -250px;
+    background: rgba(139,92,246,.22);
+    animation: glowRight 20s ease-in-out infinite alternate;
+}
+
+@keyframes glowLeft{
+
+    from{
+        transform:translate(0,0);
+    }
+
+    to{
+        transform:translate(180px,-120px);
+    }
+
+}
+
+@keyframes glowRight{
+
+    from{
+        transform:translate(0,0);
+    }
+
+    to{
+        transform:translate(-180px,-120px);
+    }
+
+} */
+
+/* ===========================================
+   CONTAINER
+=========================================== */
+
+.skills-container{
+
+    width:100%;
+    padding:0 8%;
+    position:relative;
+    z-index:2;
+
+}
+
+.skills-heading{
+
+    margin-bottom:28px;
+
+}
+
+.skills-heading p{
+
+    color:#8b5cf6;
+
+    letter-spacing:5px;
+
+    font-size:14px;
+
+    margin-bottom:15px;
+
+    font-weight:600;
+
+}
+
+.skills-heading h2{
+
+    color:#94A3B8;
+
+    font-size:48px;
+
+    line-height:1.05;
+
+    max-width:500px;
+
+    margin:0;
+
+}
+
+/* ===========================================
+   LAYOUT
+=========================================== */
+
+.skills-layout{
+
+    display:flex;
+
+    align-items:flex-end;
+
+    justify-content:space-between;
+
+    margin-top:10px;
+
+}
+
+.skills-bars{
+
+    display:flex;
+    align-items:flex-end;
+    gap:14px;
+    width:60%;
+
+}
+
+/* ===========================================
+   CARD
+=========================================== */
+
+.skill-bar{
+
+    width:82px;
+    height:350px;
+
+    border-radius:28px;
+
+    overflow:hidden;
+
+    position:relative;
+
+    cursor:pointer;
+
+    background:
+
+    linear-gradient(
+
+        180deg,
+
+        rgba(255,255,255,.08),
+
+        rgba(255,255,255,.03)
+
+    );
+
+    border:1px solid rgba(255,255,255,.08);
+
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+
+    box-shadow:
+
+        0 15px 35px rgba(0,0,0,.28);
+
+    display:flex;
+    justify-content:center;
+    align-items:flex-end;
+
+    transition:
+
+        border .35s,
+        box-shadow .35s,
+        transform .35s;
+
+    opacity:0;
+
+}
+
+.skill-bar:hover{
+
+    transform:translateY(-6px);
+
+}
+
+.skill-bar.active{
+
+    border-color:rgba(139,92,246,.35);
+
+    box-shadow:
+
+    0 18px 45px rgba(0,0,0,.4),
+
+    0 0 25px rgba(139,92,246,.15);
+
+}
+
+/* ===========================================
+   SHINE
+=========================================== */
+
+.skill-bar::after{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+    left:-120%;
+
+    width:60%;
+    height:100%;
+
+    background:
+
+    linear-gradient(
+
+        90deg,
+
+        transparent,
+
+        rgba(255,255,255,.12),
+
+        transparent
+
+    );
+
+    transform:skewX(-18deg);
+
+}
+
+.skill-bar.active::after{
+
+    animation:shine 1.3s;
+
+}
+
+@keyframes shine{
+
+    from{
+
+        left:-120%;
+
+    }
+
+    to{
+
+        left:160%;
+
+    }
+
+}
+
+/* ===========================================
+   VERTICAL TITLE
+=========================================== */
+
+.collapsed-title{
+
+    writing-mode:vertical-rl;
+
+    transform:rotate(180deg);
+
+    margin-bottom:35px;
+
+    color:white;
+
+    font-size:24px;
+
+    font-weight:600;
+
+    letter-spacing:2px;
+
+    transition:
+
+        opacity .35s,
+        transform .35s;
+
+}
+
+.skill-bar.active .collapsed-title{
+
+    opacity:0;
+
+    transform:
+
+        rotate(180deg)
+
+        translateY(30px);
+
+}
+
+/* ===========================================
+   EXPANDED CONTENT
+=========================================== */
+
+.expanded-content{
+
+    position:absolute;
+
+    inset:0;
+
+    padding:28px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:18px;
+
+    text-align:center;
+
+    opacity:0;
+
+    transform:translateX(20px);
+
+    transition:.45s;
+
+}
+
+.skill-bar.active .expanded-content{
+
+    opacity:1;
+
+    transform:translateX(0);
+
+    pointer-events:auto;
+
+}
+
+/* ===========================================
+   IMAGE
+=========================================== */
+
+.expanded-content img{
+
+    width:120px;
+    height:120px;
+
+    margin:5px auto 18px;
+
+    object-fit:contain;
+
+    transition:.45s;
+
+    filter:
+
+    drop-shadow(
+
+        0 0 20px rgba(139,92,246,.3)
+
+    );
+
+}
+
+.skill-bar.active img{
+
+    transform:scale(1.05);
+
+}
+
+/* ===========================================
+   TEXT
+=========================================== */
+.expanded-info{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:8px;
+
+}
+.expanded-info h3{
+
+    color:white;
+
+    font-size:30px;
+
+    margin-bottom:8px;
+
+}
+
+.expanded-info span{
+
+    color:#8ec8ff;
+
+    display:block;
+
+    margin-bottom:18px;
+
+    font-size:15px;
+
+}
+
+.expanded-info p{
+
+    color:#B6C2D3;
+
+    line-height:1.7;
+
+    font-size:15px;
+
+}
+
+/* ===========================================
+   CHARACTER SPACE
+=========================================== */
+
+.skills-character-space{
+
+    width:32%;
+    height:420px;
+
+}
+
+/* ===========================================
+   FLOAT
+=========================================== */
+
+.skill-bar:nth-child(odd){
+
+    animation:floatOne 6s ease-in-out infinite;
+
+}
+
+.skill-bar:nth-child(even){
+
+    animation:floatTwo 7s ease-in-out infinite;
+
+}
+
+@keyframes floatOne{
+
+    0%{
+
+        transform:translateY(0);
+
+    }
+
+    50%{
+
+        transform:translateY(-3px);
+
+    }
+
+    100%{
+
+        transform:translateY(0);
+
+    }
+
+}
+
+@keyframes floatTwo{
+
+    0%{
+
+        transform:translateY(-2px);
+
+    }
+
+    50%{
+
+        transform:translateY(3px);
+
+    }
+
+    100%{
+
+        transform:translateY(-2px);
+
+    }
+
+}
+
+/* ===========================================
+   RESPONSIVE
+=========================================== */
+
+@media(max-width:1200px){
+
+    .skills-layout{
+
+        flex-direction:column;
+
+        gap:60px;
+
+    }
+
+    .skills-bars{
+
+        width:100%;
+        justify-content:center;
+
+    }
+
+    .skills-character-space{
+
+        width:100%;
+        height:500px;
+
+    }
+
+}

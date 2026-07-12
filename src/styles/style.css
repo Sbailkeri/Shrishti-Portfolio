@@ -1,0 +1,24 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,
+body{
+    height:100%;
+}
+
+html{
+    scroll-snap-type:y mandatory;
+    scroll-behavior:smooth;
+}
+
+.hero-section,
+.about-section,
+.skills-section,
+.projects-section,
+.contact-section{
+    height:100vh;
+    scroll-snap-align:start;
+}
