@@ -1,5 +1,7 @@
 import { Canvas } from "@react-three/fiber";
 
+import { useEffect, useState } from "react";
+
 import Character from "./Character";
 
 import Lights from "./Lights";
@@ -13,6 +15,34 @@ import { useScene } from "./SceneContext";
 
 
 export default function SceneController(){
+
+  const [isMobile, setIsMobile] = useState(
+    window.innerWidth <= 768
+);
+
+useEffect(() => {
+
+    const handleResize = () => {
+
+        setIsMobile(
+            window.innerWidth <= 768
+        );
+
+    };
+
+    window.addEventListener(
+        "resize",
+        handleResize
+    );
+
+    return () => {
+        window.removeEventListener(
+            "resize",
+            handleResize
+        );
+    };
+
+}, []);
 
     const {
 
@@ -41,14 +71,17 @@ pointerEvents: "none",
 >
 
 <Canvas
-  camera={{
-    position: [0, 1.5, 10],
-    fov: 45,
-  }}
-  events={undefined}
-  style={{
-    pointerEvents: "none",
-  }}
+    style={{
+        pointerEvents: "none",
+    }}
+    camera={{
+        position: isMobile
+            ? [0, 1.5, 10]
+            : [0, 1.5, 10],
+        fov: isMobile
+            ? 50
+            : 45,
+    }}
 >
 
 <Lights/>

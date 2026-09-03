@@ -527,3 +527,212 @@
     }
 
 }
+
+
+/* ===========================================
+   MOBILE SKILLS
+=========================================== */
+
+@media (max-width: 768px){
+
+    .skills-section{
+        height:100vh;
+        overflow:hidden;
+        align-items:flex-start;
+    }
+
+    .skills-container{
+        width:100%;
+        padding:90px 6% 30px;
+    }
+
+    /* ---------- HEADING ---------- */
+
+    .skills-heading{
+        margin-bottom:25px;
+    }
+
+    .skills-heading p{
+        font-size:11px;
+        letter-spacing:4px;
+        margin-bottom:8px;
+    }
+
+    .skills-heading h2{
+        font-size:28px;
+        line-height:1.1;
+        max-width:300px;
+    }
+
+
+    /* ---------- LAYOUT ---------- */
+
+    .skills-layout{
+        position:relative;
+        display:block;
+        margin-top:0;
+    }
+
+
+    /* ---------- CAPSULE AREA ---------- */
+
+    .skills-bars{
+        width:65%;
+        display:flex;
+        flex-wrap:wrap;
+        align-items:center;
+        justify-content:flex-start;
+        gap:10px;
+        position:relative;
+        z-index:5;
+    }
+
+
+    /* ---------- CAPSULE ---------- */
+
+    .skill-bar{
+    width:auto;
+    height:auto;
+    min-height:38px;
+
+    padding:9px 16px;
+
+    border-radius:50px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    opacity:0;
+
+    transition:
+        transform .45s ease,
+        border-color .45s ease,
+        box-shadow .45s ease,
+        background .45s ease;
+}
+
+
+    /* ---------- CAPSULE TEXT ---------- */
+
+    .collapsed-title{
+        writing-mode:horizontal-tb;
+        transform:none !important;
+
+        margin:0;
+
+        color:white;
+        font-size:12px;
+        font-weight:600;
+        letter-spacing:.5px;
+
+        white-space:nowrap;
+
+        opacity:1 !important;
+    }
+
+
+    /* ---------- REMOVE DESKTOP EXPANDED CONTENT ---------- */
+
+    .expanded-content{
+        display:none;
+    }
+
+
+    /* ---------- SUBTLE HOVER ---------- */
+
+    .skill-bar:hover,
+.skill-bar.active{
+
+    background:linear-gradient(
+        145deg,
+        rgba(139,92,246,.18),
+        rgba(255,255,255,.07)
+    );
+
+    border-color:#8B5CF6;
+
+    box-shadow:
+        0 0 30px rgba(139,92,246,.22),
+        0 10px 30px rgba(0,0,0,.25),
+        inset 0 1px 1px rgba(255,255,255,.08);
+}
+
+
+    /* ---------- CHARACTER AREA ---------- */
+
+    .skills-character-space{
+        position:absolute;
+
+        width:45%;
+        height:45%;
+
+        right:0;
+        bottom:0;
+
+        z-index:2;
+
+        pointer-events:none;
+    }
+
+
+    /* ---------- STOP DESKTOP FLOATING EFFECT ---------- */
+
+   @keyframes floatCapsule{
+
+    0%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-7px);
+    }
+
+    100%{
+        transform:translateY(0);
+    }
+
+}
+
+
+/* Floating motion */
+
+.skill-bar{
+    animation:floatCapsule 5s ease-in-out infinite;
+}
+
+
+/* Different timing so they don't move together */
+
+.skill-bar:nth-child(1){
+    animation-delay:0s;
+}
+
+.skill-bar:nth-child(2){
+    animation-delay:1s;
+}
+
+.skill-bar:nth-child(3){
+    animation-delay:2s;
+}
+
+.skill-bar:nth-child(4){
+    animation-delay:3s;
+}
+
+.skill-bar:nth-child(5){
+    animation-delay:1.5s;
+}
+
+.skill-bar:nth-child(6){
+    animation-delay:3.5s;
+}
+
+.skill-bar:nth-child(7){
+    animation-delay:2.5s;
+}
+
+.skill-bar:nth-child(8){
+    animation-delay:4s;
+}
+}

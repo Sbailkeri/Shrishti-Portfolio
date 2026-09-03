@@ -325,3 +325,115 @@
     left:42%;
 
 }
+
+
+/* ===========================================
+   MOBILE ABOUT
+=========================================== */
+
+@media (max-width: 768px) {
+
+    /* Keep the section itself exactly as it is */
+    .about-section {
+        min-height: 120vh;
+        max-height: none;
+        height: 100svh;
+        overflow: hidden;
+
+        padding: 161px 25px 45px;
+    }
+
+
+    /* Main vertical layout */
+    .about-container {
+        width: 100%;
+        gap: 25px;
+    }
+
+
+    /* =========================
+       LEFT CONTENT
+    ========================= */
+
+    .about-left {
+        width: 100%;
+    }
+
+    .about-tag {
+        font-size: 0.65rem;
+        letter-spacing: 3px;
+        margin-bottom: 8px;
+    }
+
+    .about-title {
+        font-size: 2.4rem;
+        line-height: 1;
+        margin-bottom: 14px;
+    }
+
+    .about-description {
+        font-size: 0.82rem;
+        line-height: 1.55;
+        margin-bottom: 22px;
+    }
+
+
+    /* =========================
+       STATS
+    ========================= */
+
+    .about-stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px 20px;
+    }
+
+    .stat h3 {
+        font-size: 1.8rem;
+        margin-bottom: 2px;
+    }
+
+    .stat span {
+        font-size: 0.78rem;
+    }
+
+
+    /* =========================
+       RIGHT CONTENT
+    ========================= */
+
+    .about-right {
+        width: 100%;
+        gap: 18px;
+        align-items: center;
+    }
+
+
+    /* =========================
+       CARDS
+    ========================= */
+
+    .about-card {
+        width: 100%;
+        max-width: none;
+        padding: 20px;
+        border-radius: 22px;
+    }
+
+    .about-card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+    }
+
+    .about-card p {
+        font-size: 0.8rem;
+        line-height: 1.5;
+    }
+
+
+    /* Don't make the cards jump as much on touch */
+    .about-card:hover {
+        transform: none;
+    }
+
+}
+

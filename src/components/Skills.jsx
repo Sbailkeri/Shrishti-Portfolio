@@ -36,7 +36,7 @@ const skills = [
     id: 4,
     title: "GSAP",
     subtitle: "Animations",
-    image: "/videos-pic/gsap.svg",
+    image: `${import.meta.env.BASE_URL}videos-pic/gsap.svg`,
     description:
       "Premium page transitions, cinematic camera movement and scroll animations.",
   },
@@ -135,6 +135,11 @@ export default function Skills() {
   useEffect(() => {
 
     cardRefs.current.forEach((card,index)=>{
+      const isMobile =
+        window.matchMedia("(max-width: 768px)").matches;
+
+    if (isMobile) return;
+
 
         if(!card) return;
 

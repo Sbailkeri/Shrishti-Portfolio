@@ -22,3 +22,11 @@ html{
     height:100vh;
     scroll-snap-align:start;
 }
+
+.section-stage{
+    pointer-events:none !important;
+}
+
+canvas {
+    pointer-events: none !important;
+}

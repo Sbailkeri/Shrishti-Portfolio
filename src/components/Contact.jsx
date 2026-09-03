@@ -1,5 +1,7 @@
 import "../styles/Contact.css";
 
+import { useEffect, useState } from "react";
+
 import {
     FaEnvelope,
     FaPhoneAlt,
@@ -10,6 +12,39 @@ import {
 } from "react-icons/fa";
 
 export default function Contact() {
+     const [activeCard, setActiveCard] = useState(null);
+
+    useEffect(() => {
+
+        const handleOutsideClick = (event) => {
+
+            if (!event.target.closest(".contact-card")) {
+                setActiveCard(null);
+            }
+
+        };
+
+        document.addEventListener("click", handleOutsideClick);
+
+        return () => {
+            document.removeEventListener("click", handleOutsideClick);
+        };
+
+    }, []);
+
+    const handleCardClick = (event, index) => {
+
+        // Desktop keeps its normal link behavior
+        if (window.innerWidth > 768) return;
+
+        // Mobile: don't immediately open the link
+        event.preventDefault();
+        event.stopPropagation();
+
+        setActiveCard(activeCard === index ? null : index);
+    };
+
+
     return (
         <section
             id="contact"
@@ -41,7 +76,8 @@ export default function Contact() {
 
                         <a
                             href="mailto:shrishti04112001@gmail.com"
-                            className="contact-card"
+                            className={`contact-card ${activeCard === 0 ? "active" : ""}`}
+                            onClick={(event) => handleCardClick(event, 0)}
                         >
                             <div className="contact-icon">
                                 <FaEnvelope />
@@ -57,7 +93,8 @@ export default function Contact() {
 
                         <a
                             href="tel:+917875509444"
-                            className="contact-card"
+                            className={`contact-card ${activeCard === 1 ? "active" : ""}`}
+                            onClick={(event) => handleCardClick(event, 1)}
                         >
                             <div className="contact-icon">
                                <FaPhoneAlt />
@@ -75,7 +112,8 @@ export default function Contact() {
                             href="https://maps.google.com/?q=Pune,Maharashtra"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="contact-card"
+                            className={`contact-card ${activeCard === 2 ? "active" : ""}`}
+                            onClick={(event) => handleCardClick(event, 2)}
                         >
                             <div className="contact-icon">
                                 <FaMapMarkerAlt />
@@ -93,7 +131,8 @@ export default function Contact() {
                             href="https://linkedin.com/in/your-profile"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="contact-card"
+                            className={`contact-card ${activeCard === 3 ? "active" : ""}`}
+                            onClick={(event) => handleCardClick(event, 3)}
                         >
                             <div className="contact-icon">
                                 <FaLinkedin />
@@ -112,7 +151,8 @@ export default function Contact() {
                         <a
                             href="./videos-pic/ShrishtiResume.pdf"
                             download
-                            className="contact-card"
+                            className={`contact-card ${activeCard === 4 ? "active" : ""}`}
+                            onClick={(event) => handleCardClick(event, 4)}
                         >
                             <div className="contact-icon"><FaFileDownload /></div>
 
@@ -129,7 +169,8 @@ export default function Contact() {
                             href="https://github.com/Sbailkeri"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="contact-card"
+                            className={`contact-card ${activeCard === 5 ? "active" : ""}`}
+                            onClick={(event) => handleCardClick(event, 5)}
                         >
                             <div className="contact-icon">
                                 <FaGithub />

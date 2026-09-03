@@ -25,87 +25,199 @@ export default function SceneTimeline() {
     activeProject
 
         } = useScene();
-useEffect(() => {
 
-    // setCurrentSection("hero");
+useEffect(() => {
 
     const character = characterRef.current;
 
     if (!character) return;
 
-    const { actions, group } = character;
+    const { group } = character;
 
-    //------------------------------------
-    // Start Walk
-    //------------------------------------
+
+    // =================================================
+    // MOBILE HERO INTRO
+    // =================================================
+
+    const isMobile =
+        window.matchMedia("(max-width: 768px)").matches;
+
+
+        // -----------------------------------------
+    // HERO POSITIONS
+    // -----------------------------------------
+
+    const startX = isMobile ? -5 : -8;
+
+    const endX = isMobile ? 0 : -4;
+    const endRotationY = isMobile ? -0.5 : 0;
+
+
+    // =================================================
+    // START WALK
+    // =================================================
 
     character.playAnimation("Walk");
 
-    //------------------------------------
-    // Walk into Hero
-    //------------------------------------
 
-    gsap.fromTo(
+    // =================================================
+    // WALK INTO HERO
+    // =================================================
+
+    const walkAnimation = gsap.fromTo(
 
         group.position,
 
         {
-            x:-8,
-            y:-2.5,
-            z:-10
+            x: startX,
+            y: -2.5,
+            z: -10
         },
 
         {
 
-            x:-4,
-            y:-2.5,
-            z:0,
+            x: endX,
+            y: isMobile ? -3 : -2.5,
+            z: 0,
 
-            duration:4,
+            duration: isMobile ? 3.5 : 4,
 
-            ease:"power2.out",
+            ease: "power2.out",
 
-            onComplete:()=>{
+            onComplete: () => {
 
-                //--------------------------------
-                // Stop Walk
-                //--------------------------------
+    // =====================================
+    // WAVE
+    // =====================================
 
-                character.playAnimation("Wave", {
+    character.playAnimation("Wave", {
+        loop: false
+    });
 
-                    loop: false
+
+    // =====================================
+    // SMALLER CHARACTER
+    // =====================================
+
+    gsap.to(group.scale, {
+
+        x: .9,
+        y: .9,
+        z: .9,
+
+        duration: 1
+
+    });
+
+
+    // =====================================
+    // POSE
+    // =====================================
+
+    gsap.delayedCall(2, () => {
+
+        character.playAnimation("Pose");
+
+
+        // =================================
+        // MOBILE ONLY
+        // =================================
+
+        if (isMobile) {
+
+            gsap.delayedCall(2.5, () => {
+
+
+                // First fade all character
+                // meshes
+
+                group.traverse((child) => {
+
+                    if (child.isMesh) {
+
+                        gsap.to(child.material, {
+
+                            opacity: 0,
+
+                            duration: 0.8,
+
+                            ease: "power2.out"
+
+                        });
+
+                    }
 
                 });
 
-                gsap.to(group.scale,{
 
-                    x:.9,
-                    y:.9,
-                    z:.9,
+                // Then shrink group
 
-                    duration:1
+                gsap.to(group.scale, {
+
+                    x: 0,
+                    y: 0,
+                    z: 0,
+
+                    duration: 1,
+
+                    delay: 0.2,
+
+                    ease: "power3.in",
+
+                    onComplete: () => {
+
+                        window.dispatchEvent(
+                            new Event(
+                                "hero-character-exit"
+                            )
+                        );
+
+                    }
 
                 });
 
-                //--------------------------------
-                // Pose
-                //--------------------------------
+            });
 
-                const poseDelay = gsap.delayedCall(2, () => {
-                    character.playAnimation("Pose");
-                });
+        }
 
-                return () => {
-                    poseDelay.kill();
-                };
+    });
 
-            }
+}
 
         }
 
     );
+    gsap.to(group.rotation, {
 
-},[]);    
+    y: endRotationY,
+
+    duration: isMobile ? 1.2 : -0.5,
+
+    ease: "power2.out"
+
+});
+
+
+    // =================================================
+    // CLEANUP
+    // =================================================
+
+    return () => {
+
+        walkAnimation.kill();
+
+        if (group.userData.poseDelay) {
+
+            group.userData.poseDelay.kill();
+
+        }
+
+    };
+
+
+}, []);
+
+   
 
    
 // =======================================
@@ -128,53 +240,135 @@ useEffect(() => {
 
         once:false,
 
-        onEnter:()=>{
-            // setCurrentSection("about");
+        onEnter: () => {
 
-            console.log("ABOUT ENTERED");
 
-            character.playAnimation("Jump",{
+    const character = characterRef.current;
 
-                loop:false
+    if (!character) return;
+
+    const { group } = character;
+
+    // -----------------------------------------
+    // CHECK MOBILE
+    // -----------------------------------------
+
+    const isMobile =
+        window.matchMedia("(max-width: 768px)").matches;
+
+        gsap.killTweensOf(group.position);
+  gsap.killTweensOf(group.scale);
+  gsap.killTweensOf(group.rotation);
+
+
+
+    // -----------------------------------------
+    // JUMP
+    // -----------------------------------------
+
+    character.playAnimation("Jump", {
+        loop: false
+    });
+
+
+    // -----------------------------------------
+    // CHARACTER SCALE
+    // -----------------------------------------
+
+    gsap.to(group.scale, {
+
+        x: .8,
+        y: .8,
+        z: .8,
+
+        duration: 1.5
+
+    });
+
+
+    // -----------------------------------------
+    // CHARACTER POSITION
+    // -----------------------------------------
+
+    gsap.to(group.position, {
+
+        x: 0,
+        y: -2,
+        z: 0,
+
+        duration: 2,
+
+        ease: "power2.inOut"
+
+    });
+
+
+    // -----------------------------------------
+    // AFTER JUMP
+    // -----------------------------------------
+
+    gsap.delayedCall(2, () => {
+
+
+        // =====================================
+        // MOBILE
+        // =====================================
+
+        if (isMobile) {
+
+            // Don't play Point.
+
+            gsap.to(group.scale, {
+
+                x: 0,
+                y: 0,
+                z: 0,
+
+                duration: .7,
+
+                ease: "power3.in",
+
+                onComplete: () => {
+
+                    window.dispatchEvent(
+                        new Event("character-landed")
+                    );
+
+                }
 
             });
 
-           
-            gsap.to(group.scale,{
+        }
 
-                x:.8,
-                y:.8,
-                z:.8,
 
-                duration:1.5
+        // =====================================
+        // DESKTOP
+        // =====================================
 
-            });
+        else {
 
-                    gsap.to(group.position,{
-                x:0,
-                y:-2,
-                z:0,
-                duration:2,
-                ease:"power2.inOut"
-            });
+            // Keep your existing Point animation.
 
-            gsap.delayedCall(2,()=>{
+            character.playAnimation("Point", { loop: true });
 
-                character.playAnimation("Point");
 
-                window.dispatchEvent(
-                    new Event("character-landed")
-                );
+            window.dispatchEvent(new Event("character-landed"));
 
-            });
+        }
 
-        },
+    });
+
+},
 
 onLeaveBack:()=>{
 
     const character = characterRef.current;
 
     if(!character) return;
+    gsap.killTweensOf(group.position);
+  gsap.killTweensOf(group.scale);
+  gsap.killTweensOf(group.rotation);
+
 
     // gsap.to(camera.position, {
 
@@ -230,91 +424,167 @@ onLeaveBack:()=>{
 
 useEffect(() => {
 
-   
-
     const trigger = ScrollTrigger.create({
 
         trigger: "#skills",
-
         start: "top center",
-
         once: false,
 
         onEnter: () => {
-            //  setCurrentSection("skills");
 
             const character = characterRef.current;
             const camera = cameraRef.current;
 
             if (!character || !camera) return;
 
+            const isMobile =
+                window.matchMedia("(max-width: 768px)").matches;
+
             console.log("🎬 Skills Timeline Started");
 
             //------------------------------------------
-            // Stop About Animation
-            //------------------------------------------
-            
-           character.playAnimation("Typing");
-
-            //------------------------------------------
-            // Character Position
+            // Start Typing Animation
             //------------------------------------------
 
+            character.playAnimation("Typing");
 
-            
-            gsap.to(character.group.position, {
-
-                x: 7,
-                y: -1,
-                z: 0.1,
-
-                duration: 1.8,
-
-                ease: "power2.inOut"
-
-            });
 
             //------------------------------------------
-            // Character Rotation
+            // MOBILE
             //------------------------------------------
 
-            gsap.to(character.group.rotation, {
+            if (isMobile) {
 
-                x: 0,
-                y: -1.5,
-                z: -0.1,
+                // Character moves to bottom-right
+                gsap.to(character.group.position, {
 
-                duration: 1.8,
+                    x: 1.2,
+                    y: -2.5,
+                    z: 0.1,
 
-                ease: "power2.inOut"
+                    duration: 1.8,
 
-            });
+                    ease: "power2.inOut"
+
+                });
+
+
+                // Keep the same slight turn
+                gsap.to(character.group.rotation, {
+
+                    x: 0,
+                    y: -0.8,
+                    z: -0.1,
+
+                    duration: 1.8,
+
+                    ease: "power2.inOut"
+
+                });
+
+
+                // Smaller character
+                gsap.to(character.group.scale, {
+
+                    x: .78,
+                    y: .78,
+                    z: .78,
+
+                    duration: 1.8,
+
+                    ease: "power2.inOut"
+
+                });
+
+
+                // Keep camera simple on mobile
+                gsap.to(camera.position, {
+
+                    x: 0,
+                    y: 1.5,
+                    z: 10,
+
+                    duration: 1.5,
+
+                    ease: "power2.inOut",
+
+                    onUpdate: () => {
+
+                        camera.lookAt(
+                            0,
+                            1,
+                            0
+                        );
+
+                    }
+
+                });
+
+            }
+
 
             //------------------------------------------
-            // Camera Move
+            // DESKTOP
             //------------------------------------------
 
-            gsap.to(camera.position, {
+            else {
 
-                x: 2.2,
-                y: 2.0,
-                z: 6,
+                // Character Position
 
-                duration: 2,
+                gsap.to(character.group.position, {
 
-                ease: "power2.inOut",
+                    x: 7,
+                    y: -1,
+                    z: 0.1,
 
-                onUpdate: () => {
+                    duration: 1.8,
 
-                    camera.lookAt(
-                        3.6,
-                        0.8,
-                        0
-                    );
+                    ease: "power2.inOut"
 
-                }
+                });
 
-            });
+
+                // Character Rotation
+
+                gsap.to(character.group.rotation, {
+
+                    x: 0,
+                    y: -1.5,
+                    z: -0.1,
+
+                    duration: 1.8,
+
+                    ease: "power2.inOut"
+
+                });
+
+
+                // Camera
+
+                gsap.to(camera.position, {
+
+                    x: 2.2,
+                    y: 2.0,
+                    z: 6,
+
+                    duration: 2,
+
+                    ease: "power2.inOut",
+
+                    onUpdate: () => {
+
+                        camera.lookAt(
+                            3.6,
+                            0.8,
+                            0
+                        );
+
+                    }
+
+                });
+
+            }
+
 
             //------------------------------------------
             // Animate Skill Cards
@@ -326,46 +596,120 @@ useEffect(() => {
 
         },
 
-onLeaveBack:()=>{
 
-    const character = characterRef.current;
+        //------------------------------------------
+        // RETURN TO ABOUT
+        //------------------------------------------
 
-    if(!character) return;
-    // gsap.to(camera.position, {
+        onLeaveBack: () => {
 
-    //             x: 0,
-    //             y: 1.5,
-    //             z: 12,
+            const character = characterRef.current;
+            const camera = cameraRef.current;
 
-    //             duration: 2,
+            if (!character || !camera) return;
 
-    //             ease: "power2.inOut",
+            const isMobile =
+                window.matchMedia("(max-width: 768px)").matches;
 
-    //             onUpdate: () => {
+            gsap.killTweensOf(character.group.position);
+            gsap.killTweensOf(character.group.scale);
+            gsap.killTweensOf(character.group.rotation);
+            gsap.killTweensOf(camera.position);
 
-    //                 camera.lookAt(0, 0, 0);
 
-    //             }
+            //------------------------------------------
+            // MOBILE
+            //------------------------------------------
 
-    //         });
+            if (isMobile) {
 
-    gsap.to(character.group.position,{
-        x:0,
-        y:-2,
-        z:0,
-        duration:1
+                gsap.to(character.group.position, {
+
+                    x: 0,
+                    y: -2,
+                    z: 0,
+
+                    duration: 1
+
+                });
+
+                gsap.to(character.group.scale, {
+
+                    x: .8,
+                    y: .8,
+                    z: .8,
+
+                    duration: 1
+
+                });
+
+                gsap.to(character.group.rotation, {
+
+                    x: 0,
+                    y: 0,
+                    z: -0.1,
+
+                    duration: 1
+
+                });
+
+                gsap.to(camera.position, {
+
+                    x: 0,
+                    y: 1.5,
+                    z: 10,
+
+                    duration: 1.5,
+
+                    onUpdate: () => {
+
+                        camera.lookAt(
+                            0,
+                            0,
+                            0
+                        );
+
+                    }
+
+                });
+
+                character.playAnimation("Point");
+
+            }
+
+
+            //------------------------------------------
+            // DESKTOP
+            //------------------------------------------
+
+            else {
+
+                gsap.to(character.group.position, {
+
+                    x: 0,
+                    y: -2,
+                    z: 0,
+
+                    duration: 1
+
+                });
+
+                gsap.to(character.group.rotation, {
+
+                    y: 0,
+
+                    duration: 1
+
+                });
+
+                character.playAnimation("Point");
+
+            }
+
+        }
+
     });
 
-    gsap.to(character.group.rotation,{
-        y:0,
-        duration:1
-    });
-
-    character.playAnimation("Point");
-
-}
-
-    });
 
     return () => trigger.kill();
 
@@ -376,6 +720,8 @@ onLeaveBack:()=>{
 // PROJECT SECTION
 // =======================================
 
+
+
 useEffect(() => {
 
     const trigger = ScrollTrigger.create({
@@ -383,8 +729,11 @@ useEffect(() => {
         trigger: "#projects",
 
         start: "top center",
+        end: "bottom center",
 
         once: false,
+
+        scrub: false,
 
         onEnter: () => {
 
@@ -393,48 +742,69 @@ useEffect(() => {
 
             if (!character || !camera) return;
 
+            const isMobile = window.innerWidth <= 768;
+
             console.log("🎬 Projects Started");
 
-            //----------------------------------------
+            // ----------------------------------------
             // Hide Laptop
-            //----------------------------------------
+            // ----------------------------------------
 
             setShowLaptop(false);
 
-            //----------------------------------------
-            // Jump into Projects
-            //----------------------------------------
+
+            // ----------------------------------------
+            // Walk
+            // ----------------------------------------
 
             character.playAnimation("Walk", {
-
                 loop: false
-
             });
 
-            //----------------------------------------
-            // Move Character
-            //----------------------------------------
 
-            gsap.to(character.group.position, {
+            // ----------------------------------------
+            // Character Position
+            // ----------------------------------------
 
-                x: 8.5,
-                y: -3.5,
-                z: 0,
+            if (isMobile) {
 
-                duration: 1.5,
+                gsap.to(character.group.position, {
 
-                ease: "power2.inOut"
+                    x: 2.7,
+                    y: -6,
+                    z: 0,
 
-            });
+                    duration: 1.5,
 
-            //----------------------------------------
-            // Rotate towards preview
-            //----------------------------------------
+                    ease: "power2.inOut"
+
+                });
+
+            } else {
+
+                gsap.to(character.group.position, {
+
+                    x: 8.5,
+                    y: -3.5,
+                    z: 0,
+
+                    duration: 1.5,
+
+                    ease: "power2.inOut"
+
+                });
+
+            }
+
+
+            // ----------------------------------------
+            // Rotation
+            // ----------------------------------------
 
             gsap.to(character.group.rotation, {
 
                 x: 0,
-                y: -1.3,
+                y: -1,
                 z: 0,
 
                 duration: 1.5,
@@ -443,54 +813,118 @@ useEffect(() => {
 
             });
 
-            //----------------------------------------
+
+            // ----------------------------------------
             // Scale
-            //----------------------------------------
+            // ----------------------------------------
 
             gsap.to(character.group.scale, {
 
-                x: 1,
-                y: 1,
-                z: 1,
+                x: isMobile ? 0.45 : 1,
+                y: isMobile ? 0.45 : 1,
+                z: isMobile ? 0.45 : 1,
 
                 duration: 1.5
 
             });
 
-            //----------------------------------------
-            // Explain Animation
-            //----------------------------------------
+
+            // ----------------------------------------
+            // Meeting Animation
+            // ----------------------------------------
 
             gsap.delayedCall(1.4, () => {
 
-                character.playAnimation("Meeting");
+                if (characterRef.current) {
 
-
-            });
-
-            //----------------------------------------
-            // Camera
-            //----------------------------------------
-
-            gsap.to(camera.position, {
-
-                x: 0,
-                y: 3,
-                z: 12,
-
-                duration: 2,
-
-                ease: "power2.inOut",
-
-                onUpdate: () => {
-
-                    camera.lookAt(0, 0, 0);
+                    characterRef.current.playAnimation("Meeting");
 
                 }
 
             });
 
+
+            // ----------------------------------------
+            // Camera
+            // ----------------------------------------
+
+            if (isMobile) {
+
+                camera.position.set(
+                    0,
+                    1.5,
+                    13
+                );
+
+                camera.lookAt(
+                    0,
+                    -0.5,
+                    0
+                );
+
+            } else {
+
+                gsap.to(camera.position, {
+
+                    x: 0,
+                    y: 3,
+                    z: 12,
+
+                    duration: 2,
+
+                    ease: "power2.inOut",
+
+                    onUpdate: () => {
+
+                        camera.lookAt(
+                            0,
+                            0,
+                            0
+                        );
+
+                    }
+
+                });
+
+            }
+
         },
+
+
+        // ==================================================
+        // MOBILE CHARACTER MOVEMENT WHILE SCROLLING
+        // ==================================================
+
+        onUpdate: (self) => {
+
+            const character = characterRef.current;
+
+            if (!character) return;
+
+            const isMobile = window.innerWidth <= 768;
+
+            if (!isMobile) return;
+
+
+            const progress = self.progress;
+
+
+            gsap.set(character.group.position, {
+
+                x: 2.7,
+
+                y: -6 + (progress * 5),
+
+                z: 0
+
+            });
+
+        },
+
+
+        // ==================================================
+        // RETURN TO SKILLS
+        // ==================================================
 
         onLeaveBack: () => {
 
@@ -498,39 +932,17 @@ useEffect(() => {
 
             if (!character) return;
 
-            //----------------------------------------
-            // Return to Skills
-            //----------------------------------------
-            //  gsap.to(camera.position, {
 
-            //     x: 2.2,
-            //     y: 2.0,
-            //     z: 6,
-
-            //     duration: 2,
-
-            //     ease: "power2.inOut",
-
-            //     onUpdate: () => {
-
-            //         camera.lookAt(
-            //             3.6,
-            //             0.8,
-            //             0
-            //         );
-
-            //     }
-
-            // });
             gsap.to(character.group.position, {
 
                 x: 5,
-                y: -2,
+                y: -6,
                 z: 3,
 
                 duration: 1
 
             });
+
 
             gsap.to(character.group.rotation, {
 
@@ -542,6 +954,7 @@ useEffect(() => {
 
             });
 
+
             gsap.to(character.group.scale, {
 
                 x: 1,
@@ -552,16 +965,17 @@ useEffect(() => {
 
             });
 
+
             character.playAnimation("Typing");
 
         }
 
     });
 
+
     return () => trigger.kill();
 
 }, []);
-
 // =======================================
 // PROJECT CARD ANIMATIONS
 // =======================================
@@ -609,6 +1023,7 @@ useEffect(() => {
             const projectScene = projectSceneRef.current;
 
             if (!character || !camera) return;
+            const isMobile = window.innerWidth <= 768;
 
             console.log("📞 Contact Started");
 
@@ -634,13 +1049,14 @@ useEffect(() => {
 
             gsap.to(character.group.position, {
 
-                x: 5,
-                y: -4,
+                x: isMobile ? 2.1 : 5,
+                y: isMobile ? -4.2 : -4,
                 z: 0,
 
                 duration: 2.5,
 
                 ease: "power2.inOut",
+
 
                 onComplete: () => {
 
@@ -675,17 +1091,16 @@ useEffect(() => {
             //----------------------------------------
             gsap.to(character.group.scale, {
 
-                x: 1.2,
-                y: 1.2,
-                z: 1.2,
+                x: isMobile ? 0.75 : 1.2,
+                y: isMobile ? 0.75 : 1.2,
+                z: isMobile ? 0.75 : 1.2,
 
                 duration: 1
-
             });
             gsap.to(character.group.rotation, {
 
                 x: 0,
-                y: -1,
+                y: isMobile ? -0.5 : -1,
                 z: 0,
 
                 duration: 2.5,

@@ -12,10 +12,10 @@ const projects = [
     description:
       "A comprehensive monitoring dashboard that visualizes assigned tasks , status of the tasks, and tracking upadates regularly.",
     tech: ["HTML", "CSS", "Django", "Jquery", "Bootstrap"],
-    video: "/videos-pic/netflow.mp4",
+    video:`${import.meta.env.BASE_URL}videos-pic/netflow.mp4`,
     live: "#",
     github: "#",
-    animation:"Talking"
+    animation:"Meeting"
   },
   
   {
@@ -26,10 +26,10 @@ const projects = [
     description:
       "A modern Framer website designed for a PG owner with booking details, contact information and responsive layouts.",
     tech: ["Framer", "UI Design", "Responsive"],
-    video: "/videos-pic/heavenstay.mp4",
+    video:`${import.meta.env.BASE_URL}videos-pic/heavenstay.mp4`,
     live: "#",
     github: "#",
-    animation:"Talking2"
+    animation:"Talking"
   },
   {
     id: 3,
@@ -39,23 +39,23 @@ const projects = [
     description:
       "Interactive portfolio featuring a fully animated 3D character synchronized with page scrolling.",
     tech: ["React", "Three.js", "GSAP", "Blender"],
-    video: "/videos-pic/portfolio.mp4",
-    live: "#",
-    github: "#",
-    animation:"Typing"
-  },
-  {
-    id: 4,
-    title: "My Blender & Design Work",
-    command: "open Blender & Design Work",
-    subtitle: "Blender 3d modals and scenes and Design snippets",
-    description:
-      "A collection of my Blender work and Design work",
-    tech: ["Blender", "Figma"],
-    video: "/videos-pic/blender&design.mp4",
+    video:  `${import.meta.env.BASE_URL}videos-pic/portfolio.mp4`,
     live: "#",
     github: "#",
     animation:"Talking1"
+  },
+  {
+    id: 4,
+    title: "My Design Work",
+    command: "open Design Work",
+    subtitle: "Creative Design snippets",
+    description:
+      "A collection of my Design work",
+    tech: ["Figma"],
+    video:  `${import.meta.env.BASE_URL}videos-pic/bbwork.mp4`,
+    live: "#",
+    github: "#",
+    animation:"Talking2"
   },
 ];
 
@@ -76,6 +76,88 @@ export default function Projects() {
 
        {/* <BackgroundFX /> */}
       {/* Background Glow */}
+
+       {/* MOBILE PROJECTS */}
+  <div className="projects-mobile">
+
+    <div className="projects-mobile-header">
+
+  <span className="section-tag">
+    PROJECTS
+  </span>
+
+  <h2>
+    Things I've Built So Far
+  </h2>
+
+  <p>
+    A collection of projects that showcase my
+    skills, creativity and problem-solving
+    abilities.
+  </p>
+
+</div>
+
+    <div className="projects-mobile-preview">
+      <LaptopScreen project={current} />
+    </div>
+
+    <div className="projects-mobile-capsules">
+      {projects.map((project) => (
+        <button
+          key={project.id}
+          type="button"
+          className={`project-capsule ${
+            current.id === project.id ? "active" : ""
+          }`}
+          onClick={() => setActiveProject(project)}
+        >
+          {project.title}
+        </button>
+      ))}
+    </div>
+
+    <div className="projects-mobile-details">
+
+      <div className="project-heading">
+        <h3>{current.title}</h3>
+        <span className="heading-line"></span>
+        <h4>{current.subtitle}</h4>
+      </div>
+
+      <p className="project-description">
+        {current.description}
+      </p>
+
+      <div className="tech-stack">
+        {current.tech.map((tech) => (
+          <span key={tech}>{tech}</span>
+        ))}
+      </div>
+
+      <div className="project-buttons">
+    <a
+        href={current.live}
+        target="_blank"
+        rel="noreferrer"
+        className="btn-primary"
+    >
+        Live Demo
+    </a>
+
+    <a
+        href={current.github}
+        target="_blank"
+        rel="noreferrer"
+        className="btn-secondary"
+    >
+        GitHub
+    </a>
+</div>
+
+    </div>
+
+  </div>
     
 
       <div className="projects-wrapper">

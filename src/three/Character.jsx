@@ -14,20 +14,19 @@ const Character = forwardRef((props, ref) => {
 
   
 
-  const { nodes, materials, animations } = useGLTF("/models/character.glb");
+  const { nodes, materials, animations } = useGLTF(`${import.meta.env.BASE_URL}models/character.glb`)
 
-  const walkAnimation = useFBX("/animations/Walk.fbx");
-  const waveAnimation = useFBX("/animations/Wave.fbx");
-  const poseAnimation = useFBX("/animations/Pose.fbx");
-  const jumpAnimation = useFBX("/animations/Jumping.fbx");
-  const pointAnimation = useFBX("/animations/Pointing.fbx");
-  const typingAnimation = useFBX("/animations/Typing.fbx");
-  const meetingAnimation = useFBX("/animations/Meeting.fbx");
-  const phoneAnimation = useFBX("/animations/Phone.fbx");
-  const talkingAnimation = useFBX("/animations/Talking.fbx");
-  const talking1Animation = useFBX("/animations/Talking1.fbx");
-  const talking2Animation = useFBX("/animations/Talking2.fbx");
-  
+  const walkAnimation = useFBX(`${import.meta.env.BASE_URL}animations/Walk.fbx`);
+  const waveAnimation = useFBX(`${import.meta.env.BASE_URL}animations/Wave.fbx`);
+  const poseAnimation = useFBX(`${import.meta.env.BASE_URL}animations/Pose.fbx`);
+  const jumpAnimation = useFBX(`${import.meta.env.BASE_URL}animations/Jumping.fbx`);
+  const pointAnimation = useFBX(`${import.meta.env.BASE_URL}animations/Pointing.fbx`);
+  const typingAnimation = useFBX(`${import.meta.env.BASE_URL}animations/Typing.fbx`);
+  const meetingAnimation = useFBX(`${import.meta.env.BASE_URL}animations/Meeting.fbx`);
+  const phoneAnimation = useFBX(`${import.meta.env.BASE_URL}animations/Phone.fbx`);
+  const talkingAnimation = useFBX(`${import.meta.env.BASE_URL}animations/Talking.fbx`);
+  const talking1Animation = useFBX(`${import.meta.env.BASE_URL}animations/Talking1.fbx`);
+  const talking2Animation = useFBX(`${import.meta.env.BASE_URL}animations/Talking2.fbx`);
 
   animations[0].name = "Idle";
   walkAnimation.animations[0].name = "Walk";
@@ -305,4 +304,4 @@ useImperativeHandle(ref, () => ({
 
 export default Character;
 
-useGLTF.preload("/models/character.glb");
+useGLTF.preload(`${import.meta.env.BASE_URL}models/character.glb`);

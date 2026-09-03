@@ -319,3 +319,516 @@
 }
 
 
+
+/* =====================================================
+   MOBILE NAVBAR
+===================================================== */
+
+.mobile-navbar {
+
+    display: none;
+
+}
+
+
+/* =====================================================
+   MOBILE MENU
+===================================================== */
+
+.mobile-menu {
+
+    display: none;
+
+}
+
+
+/* =====================================================
+   MOBILE HERO
+===================================================== */
+
+@media (max-width: 768px) {
+
+
+    /* ---------------------------------------------
+       FIXED NAVBAR
+    --------------------------------------------- */
+
+    .mobile-navbar {
+
+        position: fixed;
+
+        top: 0;
+        left: 0;
+
+        width: 100%;
+        height: 70px;
+
+        padding: 0 22px;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: space-between;
+
+        z-index: 10000;
+
+        background: rgba(4, 6, 17, 0.72);
+
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
+
+        border-bottom:
+            1px solid rgba(255,255,255,0.08);
+
+    }
+
+
+    /* ---------------------------------------------
+       LOGO
+    --------------------------------------------- */
+
+    .mobile-logo {
+
+        color: white;
+
+        text-decoration: none;
+
+        font-size: 1rem;
+
+        font-weight: 700;
+
+        letter-spacing: 2px;
+
+    }
+
+
+    /* ---------------------------------------------
+       HAMBURGER
+    --------------------------------------------- */
+
+    .hamburger {
+
+        width: 42px;
+        height: 42px;
+
+        padding: 0;
+
+        border: none;
+
+        background: transparent;
+
+        display: flex;
+
+        flex-direction: column;
+
+        justify-content: center;
+
+        align-items: center;
+
+        gap: 5px;
+
+        cursor: pointer;
+
+        z-index: 10002;
+
+    }
+
+
+    .hamburger span {
+
+        display: block;
+
+        width: 23px;
+        height: 2px;
+
+        background: white;
+
+        border-radius: 10px;
+
+        transition:
+            transform .3s ease,
+            opacity .3s ease;
+
+    }
+
+
+    /* Hamburger → X */
+
+    .hamburger.active span:nth-child(1) {
+
+        transform:
+            translateY(7px)
+            rotate(45deg);
+
+    }
+
+
+    .hamburger.active span:nth-child(2) {
+
+        opacity: 0;
+
+    }
+
+
+    .hamburger.active span:nth-child(3) {
+
+        transform:
+            translateY(-7px)
+            rotate(-45deg);
+
+    }
+
+
+    /* ---------------------------------------------
+       SIDE MENU
+    --------------------------------------------- */
+
+    .mobile-menu {
+
+        display: block;
+
+        position: fixed;
+
+        top: 70px;
+
+        right: 0;
+
+        width: 72%;
+
+        height: calc(100vh - 70px);
+
+        background:
+            rgba(8, 10, 25, 0.96);
+
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
+
+        border-left:
+            1px solid rgba(255,255,255,0.1);
+
+        z-index: 9999;
+
+        transform:
+            translateX(100%);
+
+        transition:
+            transform .45s cubic-bezier(.77,0,.18,1);
+
+    }
+
+
+    .mobile-menu.open {
+
+        transform:
+            translateX(0);
+
+    }
+
+
+    /* ---------------------------------------------
+       MENU CONTENT
+    --------------------------------------------- */
+
+    .mobile-menu-inner {
+
+        height: 100%;
+
+        padding:
+
+            60px
+            30px
+            30px;
+
+        display: flex;
+
+        flex-direction: column;
+
+        gap: 28px;
+
+    }
+
+
+    .mobile-menu-inner a {
+
+        position: relative;
+
+        color: #F8FAFC;
+
+        text-decoration: none;
+
+        font-size: 1.35rem;
+
+        font-weight: 600;
+
+        letter-spacing: .5px;
+
+        padding-bottom: 12px;
+
+        border-bottom:
+            1px solid rgba(255,255,255,.08);
+
+        transition:
+            color .25s ease,
+            transform .25s ease;
+
+    }
+
+
+    .mobile-menu-inner a:hover {
+
+        color: #A78BFA;
+
+        transform:
+            translateX(5px);
+
+    }
+
+
+    /* ---------------------------------------------
+       HERO CONTAINER
+    --------------------------------------------- */
+
+    .hero-section {
+
+        min-height: 100svh;
+        max-height: none;
+
+        width: 100%;
+
+        padding:
+            70px
+            22px
+            30px;
+
+        display: block;
+
+        position: relative;
+
+        overflow: hidden;
+
+    }
+
+
+    /* ---------------------------------------------
+       CHARACTER AREA
+    --------------------------------------------- */
+
+    .hero-left {
+
+        width: 100%;
+        height: 100%;
+
+        position: absolute;
+
+        top: 70px;
+        left: 0;
+
+        z-index: 1;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        transition:
+            opacity .8s ease;
+
+    }
+
+
+    /* ---------------------------------------------
+       INTRO AREA
+    --------------------------------------------- */
+
+    .hero-right {
+
+        width: 100%;
+        height: 70%;
+
+        position: absolute;
+
+        left: 0;
+
+        bottom: 25px;
+
+        padding:
+            0 22px;
+
+        z-index: 2;
+
+        opacity: 0;
+
+        pointer-events: none;
+
+    }
+
+
+    /* Once character is finished */
+
+    .hero-section.intro-visible .hero-left {
+
+        opacity: 0;
+
+        pointer-events: none;
+
+    }
+
+
+    .hero-section.intro-visible .hero-right {
+
+        opacity: 1;
+
+        pointer-events: auto;
+
+    }
+
+
+    /* ---------------------------------------------
+       MOBILE INTRO TYPOGRAPHY
+    --------------------------------------------- */
+
+    .hero-right h1 {
+
+        font-size:
+            clamp(3.1rem, 13vw, 4.5rem);
+
+        line-height:
+            .92;
+
+        margin-bottom: 18px;
+
+    }
+
+
+    .hero-right h3 {
+
+        font-size:
+            1rem;
+
+        line-height:
+            1.4;
+
+        margin-bottom: 14px;
+
+    }
+
+
+    .hero-right p {
+
+        font-size:
+            .9rem;
+
+        line-height:
+            1.65;
+
+        max-width:
+            100%;
+
+        margin-bottom:
+            0;
+
+    }
+
+
+    /* ---------------------------------------------
+       BUTTONS
+    --------------------------------------------- */
+
+    .hero-buttons {
+
+        width: 100%;
+
+        display: flex;
+
+        flex-direction: column;
+
+        gap: 12px;
+
+        margin-top: 24px;
+
+    }
+
+
+    .btn-primary,
+    .secondary-btn {
+
+        width: 100%;
+
+        min-width: 0;
+
+        height: 54px;
+
+        padding: 0 20px;
+
+        border-radius: 14px;
+
+        font-size:
+            .92rem;
+
+    }
+
+
+    /* ---------------------------------------------
+       SECTION STAGE
+    --------------------------------------------- */
+
+    .hero-section .section-stage {
+
+        left: 0;
+
+        bottom: 0;
+
+    }
+
+
+}
+
+
+/* =====================================================
+   SMALL PHONES
+===================================================== */
+
+@media (max-width: 390px) {
+
+    .hero-right h1 {
+
+        font-size:
+            2.9rem;
+
+    }
+
+
+    .hero-right h3 {
+
+        font-size:
+            .9rem;
+
+    }
+
+
+    .hero-right p {
+
+        font-size:
+            .82rem;
+
+        line-height:
+            1.55;
+
+    }
+
+
+    .hero-buttons {
+
+        margin-top: 18px;
+
+    }
+
+
+    .btn-primary,
+    .secondary-btn {
+
+        height: 50px;
+
+    }
+
+}
