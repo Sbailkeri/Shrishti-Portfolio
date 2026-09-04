@@ -4,7 +4,13 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useScene } from "./SceneContext";
 import * as THREE from "three";
 
+
 gsap.registerPlugin(ScrollTrigger);
+if (typeof window !== "undefined") {
+    ScrollTrigger.config({
+        ignoreMobileResize: true
+    });
+}
 
 export default function SceneTimeline() {
     
@@ -80,7 +86,7 @@ useEffect(() => {
             y: isMobile ? -3 : -2.5,
             z: 0,
 
-            duration: isMobile ? 3.5 : 4,
+            duration: isMobile ? 2.8 : 4,
 
             ease: "power2.out",
 
@@ -125,7 +131,7 @@ useEffect(() => {
 
         if (isMobile) {
 
-            gsap.delayedCall(2.5, () => {
+            gsap.delayedCall(0.2, () => {
 
 
                 // First fade all character
@@ -231,12 +237,14 @@ useEffect(() => {
     if (!character) return;
 
     const { actions, group } = character;
+    const isMobile =
+        window.matchMedia("(max-width: 768px)").matches;
 
     const trigger = ScrollTrigger.create({
 
         trigger:"#about",
 
-        start:"top bottom",
+        start: isMobile ? "top 85%" : "top center",
 
         once:false,
 
@@ -360,55 +368,55 @@ useEffect(() => {
 
 },
 
-onLeaveBack:()=>{
-
+onLeaveBack: () => {
     const character = characterRef.current;
 
-    if(!character) return;
-    gsap.killTweensOf(group.position);
-  gsap.killTweensOf(group.scale);
-  gsap.killTweensOf(group.rotation);
+    if (!character) return;
 
+    const isMobile =
+        window.matchMedia("(max-width: 768px)").matches;
 
-    // gsap.to(camera.position, {
+    // Stop any running character transitions
+    gsap.killTweensOf(character.group.position);
+    gsap.killTweensOf(character.group.scale);
+    gsap.killTweensOf(character.group.rotation);
 
-    //             x: 0,
-    //             y: 1.5,
-    //             z: 12,
+    // MOBILE
+    if (isMobile) {
+        // Hero on mobile should keep the character hidden
+        gsap.set(character.group.scale, {
+            x: 0,
+            y: 0,
+            z: 0
+        });
+        // Tell Hero to show its content again
+    window.dispatchEvent(
+        new Event("hero-content-show")  );
 
-    //             duration: 2,
+        return;
+    }
 
-    //             ease: "power2.inOut",
-
-    //             onUpdate: () => {
-
-    //                 camera.lookAt(0, 0, 0);
-
-    //             }
-
-    //         });
-
-    gsap.to(character.group.position,{
-        x:-4,
-        y:-2.5,
-        z:0,
-        duration:1
+    // DESKTOP — keep existing behavior
+    gsap.to(character.group.position, {
+        x: -4,
+        y: -2.5,
+        z: 0,
+        duration: 1
     });
 
-    gsap.to(character.group.rotation,{
-        y:0,
-        duration:1
+    gsap.to(character.group.rotation, {
+        y: 0,
+        duration: 1
     });
 
-    gsap.to(character.group.scale,{
-        x:.9,
-        y:.9,
-        z:.9,
-        duration:1
+    gsap.to(character.group.scale, {
+        x: 0.9,
+        y: 0.9,
+        z: 0.9,
+        duration: 1
     });
 
     character.playAnimation("Pose");
-
 }
 
     });
@@ -423,11 +431,13 @@ onLeaveBack:()=>{
  
 
 useEffect(() => {
+    const isMobile =
+        window.matchMedia("(max-width: 768px)").matches;
 
     const trigger = ScrollTrigger.create({
 
         trigger: "#skills",
-        start: "top center",
+        start: isMobile ? "top 85%" : "top center",
         once: false,
 
         onEnter: () => {
@@ -458,7 +468,7 @@ useEffect(() => {
                 // Character moves to bottom-right
                 gsap.to(character.group.position, {
 
-                    x: 1.2,
+                    x: 0.6,
                     y: -2.5,
                     z: 0.1,
 
@@ -603,110 +613,90 @@ useEffect(() => {
 
         onLeaveBack: () => {
 
-            const character = characterRef.current;
-            const camera = cameraRef.current;
+    const character = characterRef.current;
+    const camera = cameraRef.current;
 
-            if (!character || !camera) return;
+    if (!character || !camera) return;
 
-            const isMobile =
-                window.matchMedia("(max-width: 768px)").matches;
-
-            gsap.killTweensOf(character.group.position);
-            gsap.killTweensOf(character.group.scale);
-            gsap.killTweensOf(character.group.rotation);
-            gsap.killTweensOf(camera.position);
+    const isMobile =
+        window.matchMedia("(max-width: 768px)").matches;
 
 
-            //------------------------------------------
-            // MOBILE
-            //------------------------------------------
-
-            if (isMobile) {
-
-                gsap.to(character.group.position, {
-
-                    x: 0,
-                    y: -2,
-                    z: 0,
-
-                    duration: 1
-
-                });
-
-                gsap.to(character.group.scale, {
-
-                    x: .8,
-                    y: .8,
-                    z: .8,
-
-                    duration: 1
-
-                });
-
-                gsap.to(character.group.rotation, {
-
-                    x: 0,
-                    y: 0,
-                    z: -0.1,
-
-                    duration: 1
-
-                });
-
-                gsap.to(camera.position, {
-
-                    x: 0,
-                    y: 1.5,
-                    z: 10,
-
-                    duration: 1.5,
-
-                    onUpdate: () => {
-
-                        camera.lookAt(
-                            0,
-                            0,
-                            0
-                        );
-
-                    }
-
-                });
-
-                character.playAnimation("Point");
-
-            }
+    // Stop any running transitions
+    gsap.killTweensOf(character.group.position);
+    gsap.killTweensOf(character.group.scale);
+    gsap.killTweensOf(character.group.rotation);
+    gsap.killTweensOf(camera.position);
 
 
-            //------------------------------------------
-            // DESKTOP
-            //------------------------------------------
+    // ==========================================
+    // MOBILE
+    // ==========================================
 
-            else {
+    if (isMobile) {
 
-                gsap.to(character.group.position, {
+        // About on mobile should have NO character.
+        // Keep the character completely hidden.
 
-                    x: 0,
-                    y: -2,
-                    z: 0,
+        gsap.set(character.group.scale, {
+            x: 0,
+            y: 0,
+            z: 0
+        });
 
-                    duration: 1
+        return;
+    }
 
-                });
 
-                gsap.to(character.group.rotation, {
+    // ==========================================
+    // DESKTOP
+    // ==========================================
 
-                    y: 0,
+    gsap.to(character.group.position, {
+        x: 0,
+        y: -2,
+        z: 0,
+        duration: 1,
+        ease: "power2.inOut"
+    });
 
-                    duration: 1
 
-                });
+    gsap.to(character.group.rotation, {
+        x: 0,
+        y: 0,
+        z: -0.1,
+        duration: 1,
+        ease: "power2.inOut"
+    });
 
-                character.playAnimation("Point");
 
-            }
+    gsap.to(character.group.scale, {
+        x: 0.8,
+        y: 0.8,
+        z: 0.8,
+        duration: 1,
+        ease: "power2.inOut"
+    });
 
+
+    gsap.to(camera.position, {
+        x: 0,
+        y: 1.5,
+        z: 10,
+        duration: 1.5,
+        ease: "power2.inOut",
+
+        onUpdate: () => {
+            camera.lookAt(0, 0, 0);
         }
+    });
+
+
+    character.playAnimation("Point", {
+        loop: true
+    });
+
+}
 
     });
 
@@ -723,12 +713,14 @@ useEffect(() => {
 
 
 useEffect(() => {
+    const isMobile =
+        window.matchMedia("(max-width: 768px)").matches;
 
     const trigger = ScrollTrigger.create({
 
         trigger: "#projects",
 
-        start: "top center",
+        start: isMobile ? "top 85%" : "top center",
         end: "bottom center",
 
         once: false,
@@ -770,7 +762,7 @@ useEffect(() => {
 
                 gsap.to(character.group.position, {
 
-                    x: 2.7,
+                    x: 1.3,
                     y: -6,
                     z: 0,
 
@@ -911,7 +903,7 @@ useEffect(() => {
 
             gsap.set(character.group.position, {
 
-                x: 2.7,
+                x: 1.3,
 
                 y: -6 + (progress * 5),
 
@@ -926,51 +918,142 @@ useEffect(() => {
         // RETURN TO SKILLS
         // ==================================================
 
-        onLeaveBack: () => {
+ onLeaveBack: () => {
 
-            const character = characterRef.current;
+    const character = characterRef.current;
+    const camera = cameraRef.current;
 
-            if (!character) return;
+    if (!character || !camera) return;
 
-
-            gsap.to(character.group.position, {
-
-                x: 5,
-                y: -6,
-                z: 3,
-
-                duration: 1
-
-            });
+    const isMobile =
+        window.matchMedia("(max-width: 768px)").matches;
 
 
-            gsap.to(character.group.rotation, {
+    // ==========================================
+    // STOP PREVIOUS TRANSITIONS
+    // ==========================================
 
-                x: 0,
-                y: -1.5,
-                z: -0.1,
-
-                duration: 1
-
-            });
-
-
-            gsap.to(character.group.scale, {
-
-                x: 1,
-                y: 1,
-                z: 1,
-
-                duration: 1
-
-            });
+    gsap.killTweensOf(character.group.position);
+    gsap.killTweensOf(character.group.rotation);
+    gsap.killTweensOf(character.group.scale);
+    gsap.killTweensOf(camera.position);
 
 
-            character.playAnimation("Typing");
+    // ==========================================
+    // MOBILE
+    // ==========================================
 
-        }
+    if (isMobile) {
 
+        // Character position
+        gsap.to(character.group.position, {
+            x: 0.6,
+            y: -2.5,
+            z: 0.1,
+            duration: 1,
+            ease: "power2.inOut"
+        });
+
+
+        // Character rotation
+        gsap.to(character.group.rotation, {
+            x: 0,
+            y: -0.8,
+            z: -0.1,
+            duration: 1,
+            ease: "power2.inOut"
+        });
+
+
+        // Character scale
+        gsap.to(character.group.scale, {
+            x: 0.78,
+            y: 0.78,
+            z: 0.78,
+            duration: 1,
+            ease: "power2.inOut"
+        });
+
+
+        // Mobile Skills camera
+        gsap.to(camera.position, {
+            x: 0,
+            y: 1.5,
+            z: 10,
+            duration: 1.5,
+            ease: "power2.inOut",
+
+            onUpdate: () => {
+                camera.lookAt(0, 1, 0);
+            }
+        });
+
+    }
+
+
+    // ==========================================
+    // DESKTOP
+    // ==========================================
+
+    else {
+
+        // Character position
+        gsap.to(character.group.position, {
+            x: 7,
+            y: -1,
+            z: 0.1,
+            duration: 1,
+            ease: "power2.inOut"
+        });
+
+
+        // Character rotation
+        gsap.to(character.group.rotation, {
+            x: 0,
+            y: -1.5,
+            z: -0.1,
+            duration: 1,
+            ease: "power2.inOut"
+        });
+
+
+        // Character scale
+        gsap.to(character.group.scale, {
+            x: 1,
+            y: 1,
+            z: 1,
+            duration: 1,
+            ease: "power2.inOut"
+        });
+
+
+        // Desktop Skills camera
+        gsap.to(camera.position, {
+            x: 2.2,
+            y: 2,
+            z: 8,
+            duration: 1.5,
+            ease: "power2.inOut",
+
+            onUpdate: () => {
+                camera.lookAt(3.0, 0.8, 0);
+            }
+        });
+
+    }
+
+
+    // ==========================================
+    // SKILLS ANIMATION
+    // ==========================================
+
+    character.playAnimation("Typing", {
+        loop: true
     });
+
+}
+
+            });
 
 
     return () => trigger.kill();
@@ -1008,11 +1091,13 @@ character.playAnimation(
 
 useEffect(() => {
 
+    const isMobile =
+        window.matchMedia("(max-width: 768px)").matches;
     const trigger = ScrollTrigger.create({
 
         trigger: "#contact",
 
-        start: "top center",
+       start: isMobile ? "top 85%" : "top center",
 
         once: false,
 
@@ -1049,7 +1134,7 @@ useEffect(() => {
 
             gsap.to(character.group.position, {
 
-                x: isMobile ? 2.1 : 5,
+                x: isMobile ? 1 : 5,
                 y: isMobile ? -4.2 : -4,
                 z: 0,
 
@@ -1136,46 +1221,84 @@ useEffect(() => {
         },
 
 onLeaveBack: () => {
-
     const character = characterRef.current;
-    // const projectScene = projectSceneRef.current;
+    const camera = cameraRef.current;
 
-    if (!character) return;
+    if (!character || !camera) return;
 
-    // setShowLaptop(true);
+    const isMobile =
+        window.matchMedia("(max-width: 768px)").matches;
 
-    // if (projectScene) {
-    //     projectScene.visible = true;
-    // }
-            
+    // Stop any running transitions
+    gsap.killTweensOf(character.group.position);
+    gsap.killTweensOf(character.group.scale);
+    gsap.killTweensOf(character.group.rotation);
+    gsap.killTweensOf(camera.position);
 
-            gsap.to(character.group.position, {
-                x: 8,
-                y: -3.5,
-                z: 0,
-                duration: 0.1,
-                ease: "power2.inOut",
-                onComplete: () => {
-                    character.playAnimation("Meeting", {
-                        fade: 0
-                    });
-                }
+    // =========================================
+    // MOBILE → BACK TO PROJECTS
+    // =========================================
+
+    if (isMobile) {
+
+        gsap.to(character.group.position, {
+            x: 1.3,
+            y: -6,
+            z: 0,
+            duration: 1,
+            ease: "power2.inOut"
+        });
+
+        gsap.to(character.group.rotation, {
+            x: 0,
+            y: -1,
+            z: 0,
+            duration: 1,
+            ease: "power2.inOut"
+        });
+
+        gsap.to(character.group.scale, {
+            x: 0.45,
+            y: 0.45,
+            z: 0.45,
+            duration: 1,
+            ease: "power2.inOut"
+        });
+
+        gsap.to(camera.position, {
+            x: 0,
+            y: 1.5,
+            z: 13,
+            duration: 1.2,
+            ease: "power2.inOut",
+            onUpdate: () => {
+                camera.lookAt(0, -0.5, 0);
+            }
+        });
+
+        character.playAnimation("Meeting", {
+            loop: true
+        });
+
+        return;
+    }
+
+    // =========================================
+    // DESKTOP — KEEP EXISTING BEHAVIOR
+    // =========================================
+
+    gsap.to(character.group.position, {
+        x: 8,
+        y: -3.5,
+        z: 0,
+        duration: 0.1,
+        ease: "power2.inOut",
+        onComplete: () => {
+            character.playAnimation("Meeting", {
+                fade: 0
             });
-                // gsap.to(character.group.rotation, {
-                //     x: 0,
-                //     y: -1.3,
-                //     z: 0,
-                //     duration: 1,
-                //     ease: "power2.inOut"
-                // });
-
-                // gsap.to(character.group.scale, {
-                //     x: 1,
-                //     y: 1,
-                //     z: 1,
-                //     duration: 1
-                // });
-
+        }
+    });
 }
 
     });

@@ -536,7 +536,9 @@
 @media (max-width: 768px){
 
     .skills-section{
-        height:100vh;
+       height: 100svh;
+        min-height: 100svh;
+        max-height: 100svh;
         overflow:hidden;
         align-items:flex-start;
     }

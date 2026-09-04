@@ -901,8 +901,11 @@
   }
 
   .projects-section {
+    height: 100svh;
+    min-height: 100svh;
+    max-height: 100svh;
     padding: 75px 18px 20px;
-    height: 120vh;
+     height: 100svh;
     overflow: hidden;
     align-items: flex-start;
   }
@@ -923,8 +926,8 @@
 
      .projects-mobile-header {
     width: 100%;
-    text-align: center;
-    margin-bottom: 18px;
+    text-align: left;
+    margin-bottom: 20px;
 }
 
 .projects-mobile-header .section-tag {
@@ -933,7 +936,7 @@
     font-size: .75rem;
     font-weight: 600;
     letter-spacing: .25em;
-    margin-bottom: 8px;
+    margin-bottom: 16px;
 }
 
 .projects-mobile-header h2 {
@@ -944,6 +947,7 @@
     font-size: 2rem;
     line-height: 1.05;
     font-weight: 700;
+    margin-bottom: 18px;
 }
 
 .projects-mobile-header p {
@@ -957,6 +961,7 @@
     line-height: 1.5;
 
     opacity: 1;
+     margin-bottom: 30px;
 }
 
   .projects-mobile-header span {

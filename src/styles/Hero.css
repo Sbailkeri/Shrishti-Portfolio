@@ -590,8 +590,9 @@
 
     .hero-section {
 
+       height: 100svh;
         min-height: 100svh;
-        max-height: none;
+        max-height: 100svh;
 
         width: 100%;
 

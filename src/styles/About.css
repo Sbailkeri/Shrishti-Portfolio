@@ -335,9 +335,9 @@
 
     /* Keep the section itself exactly as it is */
     .about-section {
-        min-height: 120vh;
-        max-height: none;
         height: 100svh;
+        min-height: 100svh;
+        max-height: 100svh;
         overflow: hidden;
 
         padding: 161px 25px 45px;

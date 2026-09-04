@@ -1,5 +1,7 @@
 import { Canvas } from "@react-three/fiber";
 
+import { Loader } from "@react-three/drei";
+
 import { useEffect, useState } from "react";
 
 import Character from "./Character";
@@ -52,58 +54,65 @@ useEffect(() => {
 
 } = useScene();
 
-    return(
-
-<div
-
-style={{
-
-position:"fixed",
-
-inset:0,
-
-zIndex:9999,
-
-pointerEvents: "none",
-
-}}
-
->
-
-<Canvas
-    style={{
+return(
+  <>
+    <div
+      style={{
+        position:"fixed",
+        inset:0,
+        zIndex:9999,
         pointerEvents: "none",
-    }}
-    camera={{
-        position: isMobile
+      }}
+    >
+
+      <Canvas
+        dpr={isMobile ? 1 : [1, 2]}
+        style={{
+          pointerEvents: "none",
+        }}
+        camera={{
+          position: isMobile
             ? [0, 1.5, 10]
             : [0, 1.5, 10],
-        fov: isMobile
+          fov: isMobile
             ? 50
             : 45,
-    }}
->
+        }}
+      >
 
-<Lights/>
+        <Lights />
 
+        <Character ref={characterRef} />
 
-<Character
+        <CameraController />
 
-ref={characterRef}
+        <SceneTimeline />
 
+      </Canvas>
+
+    </div>
+
+    <Loader
+  containerStyles={{
+    background: "#040611",
+  }}
+  innerStyles={{
+    width: "300px",
+    background: "rgba(255,255,255,0.15)",
+  }}
+  barStyles={{
+    height: "2px",
+    background: "white",
+  }}
+  dataStyles={{
+    color: "white",
+    fontSize: "14px",
+    letterSpacing: "3px",
+  }}
+  dataInterpolation={(p) => `LOADING ${p.toFixed(0)}%`}
 />
 
-{/* <LaptopScreen project={current} /> */}
-
-
-<CameraController/>
-
-<SceneTimeline/>
-
-</Canvas>
-
-</div>
-
+  </>
 );
 
 }
